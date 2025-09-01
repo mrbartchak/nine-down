@@ -21,6 +21,13 @@ func roll_with_animation(rng: RandomNumberGenerator) -> int:
 	return ret
 
 
+func set_active_dice_count(count: int) -> void:
+	if count == 1:
+		_active_dice = [_dice[0]]
+	else:
+		_active_dice = [_dice[0], _dice[1]]
+
+
 func reset_active_dice() -> void:
 	if _dice.size() >= 2:
 		_active_dice = [_dice[0], _dice[1]]

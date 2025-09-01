@@ -8,6 +8,8 @@ extends Control
 @onready var _menu_btn: TextureButton = $HUD/TopBar/MenuButton
 @onready var _roll_btn: TextureButton = $BoardFrame/Board/ActionBar/RollButton
 @onready var _flip_btn: TextureButton = $BoardFrame/Board/ActionBar/FlipButton
+@onready var _dice_count_btn: TextureButton = $BoardFrame/Board/ActionBar/DiceCountButton
+@onready var _dice_count_lbl: Label = $BoardFrame/Board/ActionBar/DiceCount
 # PARTICLES
 @onready var _pop_particles: GPUParticles2D = $HUD/Overlay/PopParticles
 
@@ -18,6 +20,7 @@ func _connect_signals() -> void:
 	_connect_ui_update()
 	_connect_roll_btn_signals()
 	_connect_flip_btn_signals()
+	_connect_dice_count_btn_signals()
 	_connect_hud_signals()
 
 
@@ -26,7 +29,8 @@ func _connect_ui_update() -> void:
 	game_manager.ui_update.connect(_on_ui_update)
 
 func _on_ui_update(ctx: Constants.GameContext) -> void:
-	_ninedown_total.text = str(ctx.score).pad_zeros(3)
+	_ninedown_total.text = str(ctx.score)#.pad_zeros(3)
+	_dice_count_lbl.text = str(ctx.dice_count)
 
 
 # ===============     HUD       ==============
@@ -79,6 +83,18 @@ func _on_flip_pressed() -> void:
 	SoundManager.play_click()
 	Events.flip_pressed.emit()
 
+
+# ===============  Dice Count Button  ==============
+func _connect_dice_count_btn_signals() -> void:
+	Events.dice_count_enabled_changed.connect(_on_dice_count_enabled_changed)
+	_dice_count_btn.pressed.connect(_on_dice_count_pressed)
+
+func _on_dice_count_enabled_changed(enabled: bool) -> void:
+	_dice_count_btn.disabled = !enabled
+
+func _on_dice_count_pressed() -> void:
+	SoundManager.play_click()
+	Events.dice_count_pressed.emit()
 
 # ==============  ANIMATIONS   ===============
 func _pop_in(target: CanvasItem, up_scale: float = 2.0) -> void:

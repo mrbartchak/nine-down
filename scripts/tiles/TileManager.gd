@@ -31,6 +31,17 @@ func get_sum_tiles(keys: Array[int]) -> int:
 	return sum
 
 
+func get_max_tile(keys: Array[int]) -> int:
+	if keys.is_empty():
+		return 0
+	var max := 0
+	for key in keys:
+		var t: Tile = _tiles.get(key)
+		if t.value > max:
+			max = t.value
+	return max
+
+
 func get_valid_combinations(total: int, ids: Array[int]) -> Array:
 	var results: Array = []
 	_dfs(ids, 0, [], 0, total, results)

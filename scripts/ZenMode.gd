@@ -23,6 +23,7 @@ var _state: State = State.GAME_INIT
 
 func _ready() -> void:
 	tile_manager.tile_pressed.connect(_on_tile_pressed)
+	Events.dice_count_pressed.connect(_on_dice_count_pressed)
 	call_deferred("_change_state", ZenMode.State.GAME_INIT)
 
 
@@ -61,16 +62,19 @@ func _enter_new_round() -> void:
 	# TODO: set tiles to base tile values
 	# TODO: ctx open tiles = all tiles
 	dice_manager.reset_active_dice()
+	Events.dice_count_enabled_changed.emit(false)
 	ctx.open_tiles = tile_manager.get_all_tile_ids()
 	ctx.selected_tiles.clear()
 	ctx.roll_sum = 0
+	ctx.dice_count = 2
 	_emit_ctx()
 	_change_state(ZenMode.State.TURN_START)
 
 
 func _enter_turn_start() -> void:
 	print("turn start")
-	# TODO: Check if toggle dice
+	if tile_manager.get_max_tile(ctx.open_tiles) <= 6:
+		Events.dice_count_enabled_changed.emit(true)
 	# TODO: hint text and animations (wobble, press roll)
 	ctx.selected_tiles.clear()
 	_change_state(ZenMode.State.AWAIT_ROLL)
@@ -81,6 +85,7 @@ func _enter_await_roll() -> void:
 	Events.roll_enabled_changed.emit(true)
 	await Events.roll_pressed
 	Events.roll_enabled_changed.emit(false)
+	Events.dice_count_enabled_changed.emit(false)
 	
 	var sum: int = await dice_manager.roll_with_animation(ctx.rng)
 	ctx.roll_sum = sum
@@ -164,3 +169,11 @@ func _on_tile_pressed(tile_id: int) -> void:
 	else:
 		ctx.selected_tiles.append(tile_id)
 	_emit_ctx()
+
+func _on_dice_count_pressed() -> void:
+	if ctx.dice_count == 1:
+		ctx.dice_count = 2
+	elif ctx.dice_count == 2:
+		ctx.dice_count = 1
+	_emit_ctx()
+	dice_manager.set_active_dice_count(ctx.dice_count)

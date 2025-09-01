@@ -12,6 +12,8 @@ signal roll_enabled_changed(enabled: bool)
 signal flip_pressed()
 signal flip_enabled_changed(enabled: bool)
 
+signal dice_count_pressed()
+signal dice_count_enabled_changed(enabled: bool)
 
 
 
