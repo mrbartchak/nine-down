@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ke8870dbg6q6"]
+[gd_scene load_steps=38 format=3 uid="uid://ke8870dbg6q6"]
 
 [ext_resource type="Shader" path="res://shaders/scroll.gdshader" id="1_071g4"]
 [ext_resource type="Script" path="res://scripts/ZenMode.gd" id="1_aeq3n"]
@@ -15,8 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://cahlegiu3d80b" path="res://assets/sprites/buttons/roll/roll_normal.png" id="8_1ccry"]
 [ext_resource type="Texture2D" uid="uid://bbgamvb2hmv7" path="res://assets/sprites/buttons/hamburger/hamburger_disabled.png" id="8_4xg7o"]
 [ext_resource type="Texture2D" uid="uid://bjft7knsaa1wb" path="res://assets/sprites/buttons/roll/roll_pressed.png" id="9_k20rr"]
+[ext_resource type="Texture2D" uid="uid://ds1qlc40t3av2" path="res://assets/sprites/buttons/count/two_dice_normal.png" id="10_7p1hh"]
 [ext_resource type="Texture2D" uid="uid://d0m6kmch1e44t" path="res://assets/sprites/buttons/roll/roll_hover.png" id="10_rjma5"]
+[ext_resource type="Texture2D" uid="uid://lh3277jqtgw2" path="res://assets/sprites/buttons/count/two_dice_pressed.png" id="11_82a0e"]
 [ext_resource type="Texture2D" uid="uid://ci2fji7go6h3l" path="res://assets/sprites/buttons/roll/roll_disabled.png" id="11_cm3r2"]
+[ext_resource type="Texture2D" uid="uid://db7qgk1d1s1l" path="res://assets/sprites/buttons/count/two_dice_hover.png" id="12_54vhc"]
+[ext_resource type="Texture2D" uid="uid://bkfmkeyok23bk" path="res://assets/sprites/buttons/count/two_dice_disabled.png" id="13_np3bu"]
 [ext_resource type="Texture2D" uid="uid://b2qya260un17u" path="res://assets/sprites/buttons/flip/flip_normal.png" id="14_b7pys"]
 [ext_resource type="Texture2D" uid="uid://dkgwbik6fs082" path="res://assets/sprites/buttons/flip/flip_pressed.png" id="15_85tiq"]
 [ext_resource type="Texture2D" uid="uid://cle8epa3kw0rm" path="res://assets/sprites/buttons/flip/flip_hover.png" id="16_foqlh"]
@@ -124,6 +128,7 @@ offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(160, 90)
 
 [node name="Board" type="Control" parent="UI/BoardFrame"]
 layout_mode = 2
@@ -164,12 +169,20 @@ stretch_mode = 2
 
 [node name="Dice" type="HBoxContainer" parent="UI/BoardFrame/Board"]
 custom_minimum_size = Vector2(48, 24)
-layout_mode = 0
-offset_left = 38.0
-offset_top = 87.0
-offset_right = 94.0
-offset_bottom = 111.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -3.0
+offset_right = 28.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 8
+alignment = 1
 
 [node name="LeftDie" parent="UI/BoardFrame/Board/Dice" instance=ExtResource("5_jh6lc")]
 layout_mode = 2
@@ -253,16 +266,17 @@ grow_vertical = 0
 alignment = 1
 
 [node name="DiceCount" type="Label" parent="UI/BoardFrame/Board/ActionBar"]
+visible = false
 layout_mode = 2
 text = "0"
 
 [node name="DiceCountButton" type="TextureButton" parent="UI/BoardFrame/Board/ActionBar"]
 layout_mode = 2
 disabled = true
-texture_normal = ExtResource("5_0f273")
-texture_pressed = ExtResource("6_uunh3")
-texture_hover = ExtResource("7_4mefg")
-texture_disabled = ExtResource("8_4xg7o")
+texture_normal = ExtResource("10_7p1hh")
+texture_pressed = ExtResource("11_82a0e")
+texture_hover = ExtResource("12_54vhc")
+texture_disabled = ExtResource("13_np3bu")
 
 [node name="RollButton" type="TextureButton" parent="UI/BoardFrame/Board/ActionBar"]
 layout_mode = 2

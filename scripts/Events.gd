@@ -1,5 +1,6 @@
 extends Node
 
+signal round_started()
 signal dice_rolled(total: int)
 signal tiles_resolved()
 signal bust()

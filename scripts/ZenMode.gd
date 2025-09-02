@@ -59,14 +59,14 @@ func _enter_new_game() -> void:
 
 func _enter_new_round() -> void:
 	print("new round")
-	# TODO: set tiles to base tile values
-	# TODO: ctx open tiles = all tiles
+	Events.round_started.emit()
+	ctx.dice_count = 2
 	dice_manager.reset_active_dice()
+	dice_manager.set_active_dice_count(ctx.dice_count)
 	Events.dice_count_enabled_changed.emit(false)
 	ctx.open_tiles = tile_manager.get_all_tile_ids()
 	ctx.selected_tiles.clear()
 	ctx.roll_sum = 0
-	ctx.dice_count = 2
 	_emit_ctx()
 	_change_state(ZenMode.State.TURN_START)
 
@@ -82,8 +82,10 @@ func _enter_turn_start() -> void:
 
 func _enter_await_roll() -> void:
 	print("await roll")
+	dice_manager.dim_active_dice(true)
 	Events.roll_enabled_changed.emit(true)
 	await Events.roll_pressed
+	dice_manager.dim_active_dice(false)
 	Events.roll_enabled_changed.emit(false)
 	Events.dice_count_enabled_changed.emit(false)
 	

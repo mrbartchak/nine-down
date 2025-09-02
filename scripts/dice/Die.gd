@@ -9,3 +9,6 @@ func roll(_rng: RandomNumberGenerator) -> int:
 
 func play_roll_animation() -> void:
 	push_error("play_roll_animation() not implemented in base class")
+
+func dim(enabled: bool) -> void:
+	modulate = Color.DIM_GRAY if enabled else Color.WHITE

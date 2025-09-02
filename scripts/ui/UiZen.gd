@@ -1,15 +1,17 @@
 extends Control
 
 @onready var game_manager: ZenMode = $"../GameManager"
+# OBJECTS
+@onready var _board_frame: AspectRatioContainer = $BoardFrame
 # LABELS
 @onready var _ninedown_total: Label = $HUD/TopBar/NinedownTotal
 @onready var _roll_total: Label = $HUD/Overlay/RollTotal
+@onready var _dice_count_lbl: Label = $BoardFrame/Board/ActionBar/DiceCount
 # BUTTONS
 @onready var _menu_btn: TextureButton = $HUD/TopBar/MenuButton
 @onready var _roll_btn: TextureButton = $BoardFrame/Board/ActionBar/RollButton
 @onready var _flip_btn: TextureButton = $BoardFrame/Board/ActionBar/FlipButton
 @onready var _dice_count_btn: TextureButton = $BoardFrame/Board/ActionBar/DiceCountButton
-@onready var _dice_count_lbl: Label = $BoardFrame/Board/ActionBar/DiceCount
 # PARTICLES
 @onready var _pop_particles: GPUParticles2D = $HUD/Overlay/PopParticles
 
@@ -22,7 +24,14 @@ func _connect_signals() -> void:
 	_connect_flip_btn_signals()
 	_connect_dice_count_btn_signals()
 	_connect_hud_signals()
+	_connect_transition_animation_signals()
 
+# =============   TRANSITION ANIMATIONS ========
+func _connect_transition_animation_signals() -> void:
+	Events.round_started.connect(_on_round_started)
+
+func _on_round_started() -> void:
+	_pop_in(_board_frame, 1.2)
 
 # ==============   UI UPDATE     =============
 func _connect_ui_update() -> void:
@@ -57,6 +66,8 @@ func _on_tiles_resolved() -> void:
 
 func _on_bust() -> void:
 	_fade_down_out(_roll_total)
+	await get_tree().create_timer(0.5).timeout
+	_fade_down_out(_board_frame)
 
 # ===============  Roll Button  ==============
 func _connect_roll_btn_signals() -> void:

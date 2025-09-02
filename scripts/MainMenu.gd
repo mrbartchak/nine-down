@@ -1,11 +1,14 @@
 extends Control
 
+var base_y: float
 
 func _ready() -> void:
 	_set_version_label()
+	base_y = $MenuItems/Logo.position.y
 
 func _process(delta: float) -> void:
 	play_dice_animation(delta)
+	#play_logo_animation(delta)
 
 
 func _on_start_button_pressed() -> void:
@@ -37,3 +40,9 @@ func play_button_click() -> void:
 func play_dice_animation(delta: float) -> void:
 		$Die.rotation_degrees += 90 * delta
 		$Die2.rotation_degrees -= 90 * delta
+
+
+func play_logo_animation(delta: float) -> void:
+	var float_speed: float = 0.002
+	var float_height: float = 3.0
+	$MenuItems/Logo.position.y = base_y + sin(Time.get_ticks_msec() * float_speed) * float_height

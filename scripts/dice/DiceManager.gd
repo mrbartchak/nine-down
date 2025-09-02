@@ -24,8 +24,12 @@ func roll_with_animation(rng: RandomNumberGenerator) -> int:
 func set_active_dice_count(count: int) -> void:
 	if count == 1:
 		_active_dice = [_dice[0]]
+		_dice[0].visible = true
+		_dice[1].visible = false
 	else:
 		_active_dice = [_dice[0], _dice[1]]
+		_dice[0].visible = true
+		_dice[1].visible = true
 
 
 func reset_active_dice() -> void:
@@ -35,3 +39,8 @@ func reset_active_dice() -> void:
 		_active_dice = [_dice[0]]
 	else:
 		_active_dice.clear()
+
+
+func dim_active_dice(enabled: bool) -> void:
+	for d: Die in _active_dice:
+		d.dim(enabled)

@@ -24,6 +24,7 @@ func play_roll_animation() -> void:
 	SoundManager.play_pop()
 	self.roll_animation_completed.emit()
 
+
 # ===================================================
 # ============      Private Helpers       ===========
 # ===================================================

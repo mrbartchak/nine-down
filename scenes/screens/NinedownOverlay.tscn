@@ -1,8 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://drhxmg8jn3wwu"]
+[gd_scene load_steps=5 format=3 uid="uid://drhxmg8jn3wwu"]
 
+[ext_resource type="Script" path="res://scripts/NinedownOverlay.gd" id="1_cnqgb"]
 [ext_resource type="Texture2D" uid="uid://chhoekp3nb1k0" path="res://assets/sprites/icons/ninedown_icon.png" id="1_elggk"]
+[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="1_uitan"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2mnx"]
+shader = ExtResource("1_uitan")
+shader_parameter/speed = 1.0
+shader_parameter/scale = 0.2
+shader_parameter/edge_softness = 2.0
+shader_parameter/border_black_thresh = 0.04
+shader_parameter/border_alpha_thresh = 0.9
+shader_parameter/use_gradient = false
 
 [node name="NinedownOverlay" type="CanvasLayer"]
+script = ExtResource("1_cnqgb")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -12,7 +24,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="Background" type="ColorRect" parent="Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,14 +33,11 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.508, 0.491, 0.912, 0.484)
 
-[node name="CenterContainer" type="CenterContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Control/CenterContainer"]
+[node name="NinedownIcon" type="TextureRect" parent="Control"]
+material = SubResource("ShaderMaterial_c2mnx")
 layout_mode = 2
+offset_left = 139.0
+offset_top = 79.0
+offset_right = 181.0
+offset_bottom = 101.0
 texture = ExtResource("1_elggk")

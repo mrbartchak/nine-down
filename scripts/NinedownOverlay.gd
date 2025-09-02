@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 @onready var bg: ColorRect = $Control/Background
-@onready var icon: TextureRect = $Control/BustIcon
+@onready var icon: TextureRect = $Control/NinedownIcon
 
 func _ready() -> void:
 	show_overlay()
@@ -19,8 +19,9 @@ func _reset_ui() -> void:
 
 func _play_fade() -> Tween:
 	var tween: Tween = create_tween().set_parallel(true)
-	tween.tween_property(bg, "modulate:a", 0.8, 0.5)\
+	tween.set_parallel(true)
+	tween.tween_property(bg, "modulate:a", 0.8, 0.2)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(icon, "position:y", get_viewport().get_visible_rect().size.y/2 - icon.size.y/2, 1.0)\
-		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT).set_delay(1.0)
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	return tween
