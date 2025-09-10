@@ -31,6 +31,7 @@ func _connect_transition_animation_signals() -> void:
 	Events.round_started.connect(_on_round_started)
 
 func _on_round_started() -> void:
+	SoundManager.play_pop()
 	_pop_in(_board_frame, 1.2)
 
 # ==============   UI UPDATE     =============
@@ -78,7 +79,7 @@ func _on_roll_enabled_changed(enabled: bool) -> void:
 	_roll_btn.disabled = !enabled
 
 func _on_roll_pressed() -> void:
-	SoundManager.play_click()
+	#SoundManager.play_click()
 	Events.roll_pressed.emit()
 
 
@@ -91,7 +92,7 @@ func _on_flip_enabled_changed(enabled: bool) -> void:
 	_flip_btn.disabled = !enabled
 
 func _on_flip_pressed() -> void:
-	SoundManager.play_click()
+	#SoundManager.play_click()
 	Events.flip_pressed.emit()
 
 
